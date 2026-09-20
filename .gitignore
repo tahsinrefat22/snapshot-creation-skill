@@ -1,0 +1,10 @@
+# Per-build working directories (business research, ledgers, screenshots) — keep out of the repo
+snapshots/
+
+# Machine-local Claude Code settings
+.claude/settings.local.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
