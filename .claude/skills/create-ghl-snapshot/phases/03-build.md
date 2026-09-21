@@ -12,16 +12,17 @@
 
 ## Step 0 — Pre-flight (do not create anything until every line passes)
 
-Load Chrome tools, `tabs_context_mcp`. Check, in this order, and post the result as a checklist:
+Load Chrome tools, `tabs_context_mcp` with `createIfEmpty: true`. Work only in your own MCP tab group; never touch the user's tabs (`reference/browser-rules.md` → _Your own window_). Check, in this order, and post the result as a checklist:
 
 | #   | Check                                                                           | How                                                                                                                                                |
 | --- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1   | Chrome MCP connected and responsive                                             | tab context returns tabs                                                                                                                           |
-| 2   | A GHL tab is open and logged in                                                 | no login page, no expired-session banner, no 2FA prompt                                                                                            |
-| 3   | Correct sub-account selected                                                    | name/ID read from UI == `STATE.md` `Sub-account`; on mismatch ask the user to switch — never switch yourself                                       |
+| 2   | Your own window has GHL open and logged in                                      | tab is inside the MCP tab group (never a user tab); no login page, no expired-session banner, no 2FA prompt                                        |
+| 3   | Correct sub-account selected                                                    | name/ID read from UI == `STATE.md` `Sub-account` (`confirmed: yes`); if it's wrong, reopen the target per browser-rules; if still wrong, ask       |
 | 4   | Sub-account still matches `00-baseline-inventory.md`                            | blank → still blank; loaded → pre-existing objects still there, nothing new appeared. List anything unexpected and ask what it is; never delete it |
 | 5   | Gate 2 approved in `STATE.md`; every plan object is in `LEDGER.md` as `planned` | file read                                                                                                                                          |
 | 6   | `ghl-ui-map.md` has a path for every area this build touches                    | list missing ones and discover them now, before building                                                                                           |
+| 7   | **Labs feature "Brand New Funnel AI & Website AI" is ON for this sub-account** (only if funnels/sites are in scope) | The per-step/page AI builder + AI website builder are gated behind this Agency **Labs** feature, activated **per sub-account** — OFF by default on a new sub-account. Confirm it's enabled for the target. **You cannot enable it yourself** (agency-level — browser-rules forbid it): post a `🖐 NEEDS YOU` with the enable path from `reference/ghl-ui-map.md` → `agency-labs-ai-builder` (Agency view → Settings → Labs → Sub-Accounts tab → search bar → Activate feature → find this sub-account → enable "Brand New Funnel AI & Website AI"). Without it, funnels must be hand-built from blank. |
 
 Any failure → `🖐 NEEDS YOU` with the exact fix, wait, re-run the whole checklist. No partial pass.
 
@@ -39,6 +40,11 @@ Dependencies dictate the order. Build all of one category before the next:
 6. Forms and surveys
 7. Email / SMS templates
 8. Funnels / sites (embed forms and calendars)
+
+   **Sites & funnels — use GHL's AI builder first, then finish by hand:**
+   - **Sites:** always start with GHL's **AI site builder** to generate the pages, then edit manually for anything the AI got wrong or couldn't do. Don't hand-build a site from a blank page when the AI can scaffold it.
+   - **Funnels:** same approach — try the **AI funnel builder** first — but its capabilities are **more limited** than for sites, so expect to do more manual work (adding/reordering steps, embedding the exact form/calendar, fixing copy, wiring on-submit). Fall back to manual building whenever the AI can't produce what the plan specifies.
+   - Either way, the plan (`02-plan/08-funnels-sites.md`) is the source of truth: after the AI generates, reconcile every page section, embed and variable against the plan, replace any literal business data with the merge fields / custom values, and read back before ledgering. Record the AI-builder entry points and any quirks in `reference/ghl-ui-map.md` the first time (map-first thereafter).
 9. Workflows (reference everything above)
 10. Dashboard
 

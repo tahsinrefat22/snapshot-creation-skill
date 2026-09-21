@@ -7,7 +7,7 @@ Chronological. Append only. One line per action; a block for anything that faile
 | #   | Check                               | Result | Note |
 | --- | ----------------------------------- | ------ | ---- |
 | 1   | Chrome MCP responsive               |        |      |
-| 2   | GHL tab logged in                   |        |      |
+| 2   | Own window, GHL logged in           |        |      |
 | 3   | Correct sub-account (<name> / <id>) |        |      |
 | 4   | Matches baseline inventory          |        |      |
 | 5   | Gate 2 approved; ledger complete    |        |      |
@@ -32,3 +32,10 @@ Passed at: <timestamp>
 
 | Object | Swept after | Result |
 | ------ | ----------- | ------ |
+
+## Reference updates
+
+Every difference seen between the reference files and the live UI (changed / removed / new), with the file and entry updated.
+
+| Date | File › entry | Was | Now | Blocked the build? |
+| ---- | ------------ | --- | --- | ------------------ |

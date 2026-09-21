@@ -10,22 +10,32 @@ Write every plan file **incrementally**. Update `STATE.md` after each file.
 
 ---
 
-## Step 0 — Sub-account handoff and the blank-or-master question
+## Step 0 — Open the target sub-account and ask the blank-or-master question
 
-Post this handoff and stop:
+The target sub-account was set at the start protocol (`STATE.md` → `Sub-account`). If it's missing (for example, an old build from before this rule), ask the _Target sub-account_ question from `SKILL.md` now, before anything else.
+
+1. Load Chrome tools. Open **your own dedicated window** (`tabs_context_mcp` with `createIfEmpty: true`), then open and confirm the target per `reference/browser-rules.md` → _Opening the target sub-account_. Never use a tab the user has open.
+2. Post this and stop:
 
 ```
 🖐 NEEDS YOU
-What: Create or pick the sub-account this snapshot will be built in. Open it in a Chrome tab and stay logged in.
-      Then tell me: is it (a) blank/empty, or (b) loaded from an existing snapshot (e.g., your master snapshot)? If (b), which snapshot?
-Where: GHL agency view → Sub-accounts (I never create sub-accounts myself)
-Why I can't: creating sub-accounts is an agency-level action; only you do that.
-When done, say: "done, blank" or "done, loaded from <snapshot name>"
+What: I've opened sub-account <name> (ID <id>) in my own Chrome window. Is it (a) blank/empty, or (b) loaded from an existing snapshot (e.g., your master snapshot)? If (b), which snapshot?
+Where: n/a
+Why I can't: only you know how this sub-account was set up.
+When done, say: "blank" or "loaded from <snapshot name>"
 ```
 
-After the answer: load Chrome tools, `tabs_context_mcp`, find the GHL tab, read the sub-account name and ID from the UI (settings → business profile, or the URL's location ID). If you can't read them, ask the user for the sub-account ID and which login they're using. Record in `STATE.md`: `Sub-account: <name> | <id> | kind: blank` or `kind: loaded-from: <snapshot>`.
+3. Record it in `STATE.md`: `Sub-account: name: <name> · id: <id> · … · confirmed: yes · kind: blank` or `kind: loaded-from: <snapshot>`.
 
-## Step 1 — Capability discovery
+## Step 1 — Capability discovery (one-time; skip what is already stamped)
+
+**Discovery is a one-time investment, not a per-build step.** Before opening any builder, read `reference/ghl-capabilities.md`, `reference/defaults-first.md` and `reference/ghl-ui-map.md`:
+
+- A section with a `Verified: <date>` line is **trusted as-is**. Do not re-scrape it, and do not spot-check it. It is re-verified only when it fails in use during a build (fix it on the spot, re-stamp it, note it in the build log) or when the user runs `/create-ghl-snapshot reverify <area>`.
+- Discover **only** sections still marked `Verified: —`, and only if this build's plan needs them. Record them with a date stamp so the next build skips them too.
+- Tell the user in one line which sections were reused and which (if any) were discovered now.
+
+The list below is what a *first-ever* discovery covers:
 
 Follow `reference/browser-rules.md` → _Discovery scraping_. Fill or refresh `reference/ghl-capabilities.md`:
 
@@ -41,7 +51,7 @@ Follow `reference/browser-rules.md` → _Discovery scraping_. Fill or refresh `r
 - Dashboard widget types
 - Anything else that exists in the left nav that the plan might use (Conversations AI, Reputation, Reporting, Trigger Links, Snippets, Media)
 
-Date-stamp every section. If `ghl-capabilities.md` already has sections, verify a sample of each (one trigger, one action, one field type) against the UI; if the sample matches, keep the section; if it doesn't, re-scrape that section.
+Date-stamp every section you discover. Never re-scrape or sample-check a stamped section (see the rule above).
 
 While you're in each area, record the navigation path in `reference/ghl-ui-map.md` (exact labels). This map is what Phase 3 and Phase 5 will follow.
 
@@ -51,7 +61,7 @@ While you're in each area, record the navigation path in `reference/ghl-ui-map.m
 
 ### If blank
 
-Walk every area (workflows, funnels/sites, forms, surveys, custom fields, custom values, tags, pipelines, calendars, templates, contacts, dashboards, trigger links). Confirm each is empty except GHL defaults. Record the defaults you _do_ find (default pipeline, default calendar, built-in contact fields, location-level merge fields) in `reference/defaults-first.md` with a date stamp, and in `00-baseline-inventory.md` under "GHL defaults present".
+The blank-account defaults are recorded in `reference/defaults-first.md` ("Default objects present in a blank sub-account"). Compare against that list instead of re-learning it. A quick look at each area's list page to confirm it's empty is enough (no builders, no scratch objects). Walk every area (workflows, funnels/sites, forms, surveys, custom fields, custom values, tags, pipelines, calendars, templates, contacts, dashboards, trigger links). Confirm each is empty except GHL defaults. Record the defaults you _do_ find (default pipeline, default calendar, built-in contact fields, location-level merge fields) in `reference/defaults-first.md` with a date stamp, and in `00-baseline-inventory.md` under "GHL defaults present".
 
 If it's **not** blank: stop. Post a handoff listing what you found and ask the user to either clear it or reclassify the account as loaded. Do not delete anything.
 

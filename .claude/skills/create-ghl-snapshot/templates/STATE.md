@@ -8,8 +8,8 @@ Rewrite this file after every meaningful step. It is the single source of truth 
 | Mode                  | specific / type-only (region: <region>)                                     |
 | Vertical              | <vertical>                                                                  |
 | Working dir           | snapshots/<slug>/                                                           |
-| Sub-account           | name: — · id: — · kind: — (blank / loaded-from: <snapshot>) · login user: — |
-| Chrome tab hint       | — (re-discover on resume; never trust)                                      |
+| Sub-account           | name: — · id: — · domain: — · identified-by: id / name · confirmed: no · kind: — (blank / loaded-from: <snapshot>) · login user: — |
+| Chrome tab hint       | — (own MCP tab group only; re-discover on resume; never trust)              |
 | Status                | Phase 1                                                                     |
 | Current step          | Phase 1 · step 1 (inputs)                                                   |
 | Last completed action | — (<timestamp>)                                                             |
